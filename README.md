@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# Connect
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Connect is a social networking web application similar to Twitter where users can post updates and view their friends' profiles. The application is built using Node.js, React, MongoDB, and Express.
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+Check out the live demo of the project: [Connect Demo](https://connect-phi-one.vercel.app/)
 
-### `npm start`
+Back End Repo : [Connect](https://github.com/Rishabh022/Connect/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- View friends' profiles and posts
+- Secure authentication and authorization
+- File upload functionality for images and videos
+- Light/dark mode and responsive design
+  
 
-### `npm test`
+## Hosting
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Server**: Hosted on [Render](https://render.com/)
+- **Frontend**: Hosted on [Vercel](https://vercel.com/)
+- **DataBase**: [MongoDB atlas](https://www.mongodb.com/)
 
-### `npm run build`
+## Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Server
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Node.js**: JavaScript runtime for building the server-side application
+- **Express**: Fast, unopinionated, minimalist web framework for Node.js
+- **MongoDB**: NoSQL database for storing user data and posts
+- **Mongoose**: MongoDB object modeling tool
+- **jsonwebtoken**: Authentication using JSON Web Tokens
+- **body-parser**: Middleware for parsing incoming request bodies
+- **bcrypt**: Password hashing for secure authentication
+- **cors**: Cross-Origin Resource Sharing
+- **dotenv**: Loads environment variables from a `.env` file
+- **gridfs-stream**: File storage for MongoDB
+- **multer**: Middleware for handling file uploads
+- **multer-gridfs-storage**: GridFS storage engine for Multer
+- **helmet**: Security middleware for HTTP headers
+- **morgan**: HTTP request logger
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Client
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **React**: JavaScript library for building user interfaces
+- **Redux**: State management tool
+- **@reduxjs/toolkit**: Simplifies Redux usage
+- **redux-persist**: Persist and rehydrate a Redux store
+- **react-dropzone**: File upload component for React
+- **dotenv**: Loads environment variables
+- **formik**: Forms in React with validation
+- **yup**: Form validation
+- **react-router-dom@6**: Declarative routing for React
+- **@mui/material**: Material-UI components
+- **@emotion/react**: CSS-in-JS library
+- **@emotion/styled**: Styled components using emotion
+- **@mui/icons-material**: Material-UI icons
