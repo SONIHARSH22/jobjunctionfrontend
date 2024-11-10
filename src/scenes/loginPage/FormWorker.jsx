@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Typography, Button, TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, Button, TextField, useMediaQuery, useTheme, MenuItem, FormControl, InputLabel, Select } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,8 @@ const signupSchema = yup.object().shape({
     phone: yup.string().length(10, "Phone number must be 10 digits").required("Required"),
     password: yup.string().required("Required"),
     city: yup.string().required("Required"),
+    area: yup.string().required("Required"),
+    worktype: yup.string().required("Required"),
 });
 
 const initialLoginValues = {
@@ -30,11 +32,13 @@ const initialSignupValues = {
     phone: "",
     password: "",
     city: "",
+    area: "",
+    worktype: "",
 };
 
-const Form = () => {
+const FormWorker = () => {
     const [pageType, setPageType] = useState("login");
-    const [loading, setLoading] = useState(false); // Add loading state
+    const [loading, setLoading] = useState(false);
     const { palette } = useTheme();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,34 +47,25 @@ const Form = () => {
     const isRegister = pageType === "register";
 
     const login = async (values, onSubmitProps) => {
-        setLoading(true); // Start loading
-        const loggedInResponse = await fetch(`https://newjobjunction.onrender.com/auth/login`, {
+        setLoading(true);
+        const loggedInResponse = await fetch(`https://newjobjunction.onrender.com/workers/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values),
         });
         const loggedIn = await loggedInResponse.json();
-
-        // Log the response to see if 'loggedIn.user' and 'loggedIn.user.email' are correct
-        console.log("Logged in response:", loggedIn);
-
         onSubmitProps.resetForm();
-        setLoading(false); // End loading
+        setLoading(false);
 
-        if (loggedIn) { // Ensure loggedIn.user exists
-            sessionStorage.setItem('userType', 'user');
+        if (loggedIn) {
+            sessionStorage.setItem('userType', 'worker');
             localStorage.setItem("jwtToken", loggedIn.token);
 
-            // Store the email in sessionStorage correctly
+            dispatch(setLogin({
+                user: loggedIn.user,
+                token: loggedIn.token,
+            }));
 
-            dispatch(
-                setLogin({
-                    user: loggedIn.user,
-                    token: loggedIn.token,
-                })
-            );
-
-            // Navigate to the dashboard page
             navigate("/DashBoardPage");
         } else {
             console.log("Login failed. User data is missing or incorrect.");
@@ -78,13 +73,15 @@ const Form = () => {
     };
 
     const signup = async (values, onSubmitProps) => {
-        const savedUserResponse = await fetch(`https://newjobjunction.onrender.com/auth/signup`, {
+        setLoading(true);
+        const savedUserResponse = await fetch(`https://newjobjunction.onrender.com/workers/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values),
         });
         const savedUser = await savedUserResponse.json();
         onSubmitProps.resetForm();
+        setLoading(false);
         if (savedUser) {
             setPageType("login");
         }
@@ -141,16 +138,56 @@ const Form = () => {
                                     helperText={touched.phone && errors.phone}
                                     sx={{ gridColumn: "span 4" }}
                                 />
-                                <TextField
-                                    label="City"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.city}
-                                    name="city"
-                                    error={Boolean(touched.city) && Boolean(errors.city)}
-                                    helperText={touched.city && errors.city}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
+
+                                {/* City Dropdown */}
+                                <FormControl fullWidth required sx={{ marginBottom: 2 }}>
+                                    <InputLabel>City</InputLabel>
+                                    <Select
+                                        label="City"
+                                        name="city"
+                                        value={values.city}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        error={Boolean(touched.city) && Boolean(errors.city)}
+                                    >
+                                        <MenuItem value="mandvi">Mandvi</MenuItem>
+                                        <MenuItem value="ahmedabad">Ahmedabad</MenuItem>
+                                        <MenuItem value="rajkot">Rajkot</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                                {/* Area Dropdown */}
+                                <FormControl fullWidth required sx={{ marginBottom: 2 }}>
+                                    <InputLabel>Area</InputLabel>
+                                    <Select
+                                        label="Area"
+                                        name="area"
+                                        value={values.area}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        error={Boolean(touched.area) && Boolean(errors.area)}
+                                    >
+                                        <MenuItem value="mandvi">Mandvi</MenuItem>
+                                        <MenuItem value="bopal">Bopal</MenuItem>
+                                        <MenuItem value="trikonbag">TrikonBag</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                                {/* Work Type Dropdown */}
+                                <FormControl fullWidth required sx={{ marginBottom: 2 }}>
+                                    <InputLabel>Work Type</InputLabel>
+                                    <Select
+                                        label="Work Type"
+                                        name="worktype"
+                                        value={values.worktype}
+                                        onBlur={handleBlur}
+                                        onChange={handleChange}
+                                        error={Boolean(touched.worktype) && Boolean(errors.worktype)}
+                                    >
+                                        <MenuItem value="painting">Painter</MenuItem>
+                                        <MenuItem value="carpentry">Carpenter</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </>
                         )}
 
@@ -180,6 +217,7 @@ const Form = () => {
                         <Button
                             fullWidth
                             type="submit"
+                            disabled={loading}
                             sx={{
                                 m: "2rem 0",
                                 p: "1rem",
@@ -188,7 +226,7 @@ const Form = () => {
                                 "&:hover": { color: palette.primary.main },
                             }}
                         >
-                            {isLogin ? "LOGIN" : "REGISTER"}
+                            {loading ? "Loading..." : isLogin ? "LOGIN" : "REGISTER"}
                         </Button>
                         <Typography
                             onClick={() => {
@@ -215,4 +253,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default FormWorker;

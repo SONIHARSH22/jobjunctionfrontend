@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
-import HomePage from "scenes/homePage";
+import HomePage from "scenes/homePage/HomePage";
 import LoginPage from "scenes/loginPage";
-import Profilepage from "scenes/profilePage";
+import DashboardLayoutBasic from "components/DashboardLayoutBasic";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -19,9 +19,13 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/" />} />
-            <Route path="/profile/:userId" element={isAuth ? <Profilepage /> : <Navigate to="/" />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login-worker" element={<LoginPage userType="worker" />} />
+            <Route path="/login-user" element={<LoginPage userType="user" />} />
+            <Route
+              path="/DashBoardPage"
+              element={isAuth ? <DashboardLayoutBasic /> : <Navigate to="/" />}
+            />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
